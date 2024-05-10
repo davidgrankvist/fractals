@@ -14,7 +14,9 @@ namespace Fractals.Sierpinski
 		public Vector2 Left { get; set; }
 		public Vector2 Right { get; set; }
 
-		public Triangle[] ComputeChildren()
+		public bool IsExpanded { get; set; } = false;
+
+		public Triangle[] GenerateChildren()
 		{
 			var children = new Triangle[3];
 
@@ -29,6 +31,8 @@ namespace Fractals.Sierpinski
 			children[0] = topTriangle;
 			children[1] = leftTriangle;
 			children[2] = rightTriangle;
+
+			IsExpanded = true;
 
 			return children;
 		}

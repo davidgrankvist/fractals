@@ -1,10 +1,13 @@
-﻿using System.Numerics;
+﻿using System.Linq;
+using System.Numerics;
 
 namespace Fractals.Sierpinski.Systems
 {
 	internal class TriangleSpawner : ISystem
 	{
 		private readonly SimulationContext context;
+
+		private const int maxTriangles = 5000;
 
 		public TriangleSpawner(SimulationContext context)
 		{
@@ -14,16 +17,12 @@ namespace Fractals.Sierpinski.Systems
 		{
 			var initialTriangle = CreateInitialTriangle();
 			context.Triangles.Add(initialTriangle);
-			// spawn children a couple of times just for testing
-			SpawnChildren(initialTriangle);
-			foreach (var child in initialTriangle.ComputeChildren())
-			{
-				SpawnChildren(child);
-			}
 		}
 
 		public void Update()
 		{
+			PruneTriangles();
+			ExpandFractal();
 		}
 
 		private static Triangle CreateInitialTriangle()
@@ -40,10 +39,37 @@ namespace Fractals.Sierpinski.Systems
 			return initialTriangle;
 		}
 
-		private void SpawnChildren(Triangle triangle)
+		private void PruneTriangles()
 		{
-			var children = triangle.ComputeChildren();
-			context.Triangles.AddRange(children);
+			context.Triangles.RemoveAll(IsOutsideViewbox);
+		}
+
+		private static bool IsOutsideViewbox(Triangle triangle)
+		{
+			return triangle.Left.Y < 0 || triangle.Left.X > SimulationConstants.WINDOW_WIDTH;
+		}
+
+		private void ExpandFractal()
+		{
+			if (context.Triangles.Count > maxTriangles)
+			{
+				return;
+			}
+
+			var trianglesToAdd = new List<Triangle>();
+
+			for (int i = context.Triangles.Count - 1; i >= 0; i--)
+			{
+				var triangle = context.Triangles[i];
+				if (triangle.IsExpanded)
+				{
+					break;
+				}
+
+				trianglesToAdd.AddRange(triangle.GenerateChildren());
+			}
+
+			context.Triangles.AddRange(trianglesToAdd);
 		}
 	}
 }

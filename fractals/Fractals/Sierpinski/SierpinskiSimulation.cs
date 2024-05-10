@@ -22,6 +22,7 @@ namespace Fractals.Sierpinski
 
 		private void Initialize()
 		{
+			var inputHandler = new InputHandler(context);
 			var zoomer = new TriangleZoomer(context);
 			var spawner = new TriangleSpawner(context);
 			var renderer = new TriangleRenderer(context);
@@ -35,6 +36,7 @@ namespace Fractals.Sierpinski
 			 * update zoomer before spawner so that new triangles are spawned
 			 * based on already moved triangles
 			 */
+			systems.Add(inputHandler);
 			systems.Add(zoomer);
 			systems.Add(spawner);
 			systems.Add(renderer);

@@ -22,6 +22,8 @@ namespace Fractals.Sierpinski.Systems
 			{
 				RenderTriangle(triangle);
 			}
+
+			RenderDebugInfo();
 		}
 		private static void RenderTriangle(Triangle triangle)
 		{
@@ -44,6 +46,29 @@ namespace Fractals.Sierpinski.Systems
 		private static float GetOpacity(float side)
 		{
 			return MathF.Min(side / maxFadedSide, 1f);
+		}
+
+		private void RenderDebugInfo()
+		{
+			if (!context.DebugMode)
+			{
+				return;
+			}
+
+			RenderText($"Fractal depth: {context.Depth}", 0);
+			RenderText($"Generated triangles: {context.GeneratedTriangles}", 1);
+			RenderText($"Triangles in memory: {context.Triangles.Count}", 2);
+		}
+
+		private static void RenderText(string text, int row)
+		{
+			var marginY = 5;
+			var x = 10;
+			var y = 10 - marginY;
+			var fontSize = 20;
+
+			Raylib.DrawText(text, x, y + fontSize * row + marginY, fontSize, Color.Green);
+
 		}
 	}
 }

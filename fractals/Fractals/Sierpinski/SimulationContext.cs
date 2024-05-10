@@ -1,10 +1,4 @@
 ﻿using Fractals.Sierpinski.Systems;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace Fractals.Sierpinski
 {
 	internal class SimulationContext
@@ -13,6 +7,10 @@ namespace Fractals.Sierpinski
 		public bool ZoomIsActive { get; set; } = true;
 
 		public readonly float ZoomStep = 0.01f;
+
+		public bool DebugMode { get; set; } = false;
+		public int Depth { get; set; } = 0;
+		public int GeneratedTriangles { get; set; } = 1;
 
 		public SimulationContext()
 		{

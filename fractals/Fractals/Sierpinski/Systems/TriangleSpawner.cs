@@ -6,8 +6,8 @@ namespace Fractals.Sierpinski.Systems
 	internal class TriangleSpawner : ISystem
 	{
 		private readonly SimulationContext context;
-
 		private const int maxTriangles = 5000;
+
 
 		public TriangleSpawner(SimulationContext context)
 		{
@@ -22,7 +22,9 @@ namespace Fractals.Sierpinski.Systems
 		public void Update()
 		{
 			PruneTriangles();
+			var prevCount = context.Triangles.Count;
 			ExpandFractal();
+			UpdateDebugInfo(prevCount);
 		}
 
 		private static Triangle CreateInitialTriangle()
@@ -70,6 +72,15 @@ namespace Fractals.Sierpinski.Systems
 			}
 
 			context.Triangles.AddRange(trianglesToAdd);
+		}
+
+		private void UpdateDebugInfo(int prevCount)
+		{
+			if (context.Triangles.Count > prevCount)
+			{
+				context.Depth++;
+				context.GeneratedTriangles += context.Triangles.Count - prevCount;
+			}
 		}
 	}
 }

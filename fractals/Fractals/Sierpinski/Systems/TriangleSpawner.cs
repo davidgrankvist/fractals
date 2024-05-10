@@ -2,19 +2,18 @@
 
 namespace Fractals.Sierpinski.Systems
 {
-    internal class TriangleSpawner : ISystem
-    {
-        private readonly List<Triangle> triangles;
+	internal class TriangleSpawner : ISystem
+	{
+		private readonly SimulationContext context;
 
-        public TriangleSpawner(List<Triangle> triangles)
-        {
-            this.triangles = triangles;
-        }
-
+		public TriangleSpawner(SimulationContext context)
+		{
+			this.context = context;
+		}
 		public void Initialize()
 		{
 			var initialTriangle = CreateInitialTriangle();
-            triangles.Add(initialTriangle);
+			context.Triangles.Add(initialTriangle);
 			// spawn children a couple of times just for testing
 			SpawnChildren(initialTriangle);
 			foreach (var child in initialTriangle.ComputeChildren())
@@ -44,7 +43,7 @@ namespace Fractals.Sierpinski.Systems
 		private void SpawnChildren(Triangle triangle)
 		{
 			var children = triangle.ComputeChildren();
-			triangles.AddRange(children);
+			context.Triangles.AddRange(children);
 		}
 	}
 }

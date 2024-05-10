@@ -4,13 +4,13 @@ namespace Fractals.Sierpinski
 {
 	internal struct Triangle
 	{
-        public Triangle(Vector2 top, Vector2 left, Vector2 right)
-        {
-            Top = top;
+		public Triangle(Vector2 top, Vector2 left, Vector2 right)
+		{
+			Top = top;
 			Left = left;
 			Right = right;
-        }
-        public Vector2 Top { get; private set; }
+		}
+		public Vector2 Top { get; private set; }
 		public Vector2 Left { get; private set; }
 		public Vector2 Right { get; private set; }
 

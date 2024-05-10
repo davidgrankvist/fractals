@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Fractals.Sierpinski.Systems
 {
-    internal interface ISystem
-    {
-        public void Initialize();
+	internal interface ISystem
+	{
+		public void Initialize();
 
-        public void Update();
-    }
+		public void Update();
+	}
 }

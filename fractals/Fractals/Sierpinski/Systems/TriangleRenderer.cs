@@ -7,14 +7,14 @@ using Raylib_cs;
 
 namespace Fractals.Sierpinski.Systems
 {
-    internal class TriangleRenderer : ISystem
-    {
-		private readonly List<Triangle> triangles;
+	internal class TriangleRenderer : ISystem
+	{
+		private readonly SimulationContext context;
 
-        public TriangleRenderer(List<Triangle> triangles)
-        {
-            this.triangles = triangles;
-        }
+		public TriangleRenderer(SimulationContext context)
+		{
+			this.context = context;
+		}
 
 		public void Initialize()
 		{
@@ -22,7 +22,7 @@ namespace Fractals.Sierpinski.Systems
 
 		public void Update()
 		{
-			foreach (Triangle triangle in triangles)
+			foreach (Triangle triangle in context.Triangles)
 			{
 				RenderTriangle(triangle);
 			}

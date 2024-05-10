@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Raylib_cs;
+﻿using Raylib_cs;
 
 namespace Fractals.Sierpinski.Systems
 {
 	internal class TriangleRenderer : ISystem
 	{
 		private readonly SimulationContext context;
+		private const float maxFadedSide = 70f;
 
 		public TriangleRenderer(SimulationContext context)
 		{
@@ -29,7 +25,25 @@ namespace Fractals.Sierpinski.Systems
 		}
 		private static void RenderTriangle(Triangle triangle)
 		{
-			Raylib.DrawTriangleLines(triangle.Top, triangle.Left, triangle.Right, Color.Black);
+			var color = Color.Black;
+			// fade in triangles to prevent a flash when a new batch of triangles is generated
+			color.A = GetAlpha(triangle);
+
+			Raylib.DrawTriangleLines(triangle.Top, triangle.Left, triangle.Right, color);
+		}
+
+		private static byte GetAlpha(Triangle triangle)
+		{
+			var side = triangle.Right.X - triangle.Left.X;
+			var opacity = GetOpacity(side);
+			var alpha = (byte)(opacity * byte.MaxValue);
+
+			return alpha;
+		}
+
+		private static float GetOpacity(float side)
+		{
+			return MathF.Min(side / maxFadedSide, 1f);
 		}
 	}
 }

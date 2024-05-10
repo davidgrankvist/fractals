@@ -48,7 +48,17 @@ namespace Fractals.Sierpinski.Systems
 
 		private static bool IsOutsideViewbox(Triangle triangle)
 		{
-			return triangle.Left.Y < 0 || triangle.Left.X > SimulationConstants.WINDOW_WIDTH;
+			var isFullyOutOfView = triangle.Left.Y < 0 || triangle.Left.X > SimulationConstants.WINDOW_WIDTH;
+
+			/*
+			 * We zoom towards the left corner of the initial triangle. Since that corner is always in view,
+			 * we need to remove parent triangles that completely overlap with a child triangle within the viewbox.
+			 */
+			var leftTopMid = Triangle.GetMidPoint(triangle.Left, triangle.Top);
+			var leftRightMid = Triangle.GetMidPoint(triangle.Left, triangle.Right);
+			var overlapsWithChild = leftTopMid.Y < 0 && leftRightMid.X > SimulationConstants.WINDOW_WIDTH;
+
+			return isFullyOutOfView || overlapsWithChild;
 		}
 
 		private void ExpandFractal()
@@ -80,6 +90,10 @@ namespace Fractals.Sierpinski.Systems
 			{
 				context.Depth++;
 				context.GeneratedTriangles += context.Triangles.Count - prevCount;
+				if (context.Triangles.Count > context.MaxInMemoryCount)
+				{
+					context.MaxInMemoryCount = context.Triangles.Count;
+				}
 			}
 		}
 	}

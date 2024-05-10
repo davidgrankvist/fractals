@@ -57,7 +57,8 @@ namespace Fractals.Sierpinski.Systems
 
 			RenderText($"Fractal depth: {context.Depth}", 0);
 			RenderText($"Generated triangles: {context.GeneratedTriangles}", 1);
-			RenderText($"Triangles in memory: {context.Triangles.Count}", 2);
+			RenderText($"Max in memory count: {context.MaxInMemoryCount}", 2);
+			RenderText($"Triangles in memory: {context.Triangles.Count}", 3);
 		}
 
 		private static void RenderText(string text, int row)

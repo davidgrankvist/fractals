@@ -11,6 +11,7 @@ namespace Fractals.Sierpinski
 		public bool DebugMode { get; set; } = false;
 		public int Depth { get; set; } = 0;
 		public int GeneratedTriangles { get; set; } = 1;
+		public int MaxInMemoryCount { get; set; } = 1;
 
 		public SimulationContext()
 		{

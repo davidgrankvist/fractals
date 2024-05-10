@@ -37,7 +37,7 @@ namespace Fractals.Sierpinski
 			return children;
 		}
 
-		private static Vector2 GetMidPoint(Vector2 first, Vector2 second)
+		public static Vector2 GetMidPoint(Vector2 first, Vector2 second)
 		{
 			var midX = (first.X + second.X) / 2;
 			var midY = (first.Y + second.Y) / 2;

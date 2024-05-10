@@ -22,13 +22,22 @@ namespace Fractals.Sierpinski
 
 		private void Initialize()
 		{
-			systems.Add(new TriangleSpawner(context));
-			systems.Add(new TriangleRenderer(context));
+			var zoomer = new TriangleZoomer(context);
+			var spawner = new TriangleSpawner(context);
+			var renderer = new TriangleRenderer(context);
 
-			foreach (var system in systems)
-			{
-				system.Initialize();
-			}
+			// init spawner before zoomer to determine the zoom origin
+			spawner.Initialize();
+			zoomer.Initialize();
+			renderer.Initialize();
+
+			/*
+			 * update zoomer before spawner so that new triangles are spawned
+			 * based on already moved triangles
+			 */
+			systems.Add(zoomer);
+			systems.Add(spawner);
+			systems.Add(renderer);
 		}
 
 		private void RenderLoop()

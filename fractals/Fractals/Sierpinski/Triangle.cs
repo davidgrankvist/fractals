@@ -2,7 +2,7 @@
 
 namespace Fractals.Sierpinski
 {
-	internal struct Triangle
+	internal class Triangle
 	{
 		public Triangle(Vector2 top, Vector2 left, Vector2 right)
 		{
@@ -10,9 +10,9 @@ namespace Fractals.Sierpinski
 			Left = left;
 			Right = right;
 		}
-		public Vector2 Top { get; private set; }
-		public Vector2 Left { get; private set; }
-		public Vector2 Right { get; private set; }
+		public Vector2 Top { get; set; }
+		public Vector2 Left { get; set; }
+		public Vector2 Right { get; set; }
 
 		public Triangle[] ComputeChildren()
 		{

@@ -48,8 +48,12 @@ namespace Fractals.Sierpinski.Systems
 
 		private static Vector2 MoveAwayFrom(Vector2 point, Vector2 origin, float distance) 
 		{
-			var offsetX = distance * (point.X - origin.X) / 2;
-			var offsetY = distance * (point.Y - origin.Y) / 2;
+			/*
+			 * No need to normalize here. If we move the point by a fraction of the triangle side
+			 * then the fractal symmetry is still maintained.
+			 */
+			var offsetX = distance * (point.X - origin.X);
+			var offsetY = distance * (point.Y - origin.Y);
 
 			return new Vector2(point.X + offsetX, point.Y + offsetY);
 		}

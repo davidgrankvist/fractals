@@ -6,7 +6,7 @@ namespace Fractals.Sierpinski
 		public List<Triangle> Triangles { get; private set; }
 		public bool ZoomIsActive { get; set; } = true;
 
-		public readonly float ZoomStep = 0.01f;
+		public readonly float ZoomStep = 0.005f;
 
 		public bool DebugMode { get; set; } = false;
 		public int Depth { get; set; } = 0;
